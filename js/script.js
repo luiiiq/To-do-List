@@ -2,7 +2,7 @@ import ScrollSuave from "./modules/scroll-suave.js";
 import HrefMarcador from "./modules/href-marcador.js";
 import CriarDepoimentos from "./modules/depoimentos.js";
 import Config from "./modules/config.js";
-import modal from "./modules/modal.js";
+import Modal from "./modules/modal.js";
 import formTarefas from "./modules/tarefas-form.js";
 import carrossel from "./modules/carrossel.js";
 import menuHamburguer from "./modules/menu-hamburguer.js";
@@ -24,13 +24,15 @@ depoimentos.init();
 const configPerfil = new Config('[data-tema="config"]');
 configPerfil.init();
 
-modal(
+const modal = new Modal(
   '[data-modal="ativar"]',
   ".modal",
   ".fechar",
   ".btns-form button:nth-of-type(2)",
   '[data-modal="container"]',
 );
+modal.init();
+
 formTarefas(
   "#titulo",
   "#prazo",
