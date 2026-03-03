@@ -1,38 +1,48 @@
-export default function config(tema) {
-  const temaLista = document.querySelectorAll(tema);
-  const html = document.documentElement;
+export default class Config {
+  constructor(tema) {
+    this.temaLista = document.querySelectorAll(tema);
+    this.html = document.documentElement;
 
-  const modo = localStorage.getItem("tema");
+    this.verificarTema = this.verificarTema.bind(this);
+  };
 
-  if (temaLista.length) {
+  verificarTema() {
+    const modo = localStorage.getItem("tema");
     if (modo === "claro") {
-      temaLista[0].classList.add("ativo");
-      temaLista[1].classList.remove("ativo");
+      this.temaLista[0].classList.add("ativo");
+      this.temaLista[1].classList.remove("ativo");
     } else {
-      temaLista[1].classList.add("ativo");
-      temaLista[0].classList.remove("ativo");
-    }
+      this.temaLista[1].classList.add("ativo");
+      this.temaLista[0].classList.remove("ativo");
+    };
+  };
 
-    function ativarTema(event) {
-      if (event.currentTarget.innerText === "Claro") {
-        localStorage.setItem("tema", "claro");
-        html.classList.remove("tema-escuro");
-      } else {
-        localStorage.setItem("tema", "escuro");
-        html.classList.add("tema-escuro");
-      }
+  ativarTema(event) {
+    if (event.currentTarget.innerText === "Claro") {
+      localStorage.setItem("tema", "claro");
+      this.html.classList.remove("tema-escuro");
+    } else {
+      localStorage.setItem("tema", "escuro");
+      this.html.classList.add("tema-escuro");
+    };
 
-      if (temaLista[0] !== event.currentTarget) {
-        temaLista[0].classList.remove("ativo");
-        event.currentTarget.classList.toggle("ativo");
-      } else {
-        temaLista[1].classList.remove("ativo");
-        event.currentTarget.classList.toggle("ativo");
-      }
-    }
+    if (this.temaLista[0] !== event.currentTarget) {
+      this.temaLista[0].classList.remove("ativo");
+      event.currentTarget.classList.toggle("ativo");
+    } else {
+      this.temaLista[1].classList.remove("ativo");
+      event.currentTarget.classList.toggle("ativo");
+    };
+  };
 
-    temaLista.forEach((tema) => {
-      tema.addEventListener("click", (event) => ativarTema(event));
-    });
-  }
-}
+
+  init() {
+    if (this.temaLista.length) {
+      this.verificarTema();
+      this.temaLista.forEach((tema) => {
+        tema.addEventListener("click", (event) => this.ativarTema(event));
+      });
+    };
+    return this;
+  };
+};
