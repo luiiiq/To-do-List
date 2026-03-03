@@ -1,6 +1,6 @@
 import ScrollSuave from "./modules/scroll-suave.js";
 import HrefMarcador from "./modules/href-marcador.js";
-import criarDepoimentos from "./modules/depoimentos.js";
+import CriarDepoimentos from "./modules/depoimentos.js";
 import config from "./modules/config.js";
 import modal from "./modules/modal.js";
 import formTarefas from "./modules/tarefas-form.js";
@@ -18,7 +18,9 @@ scrolSuave.init();
 const hrefMarcador = new HrefMarcador(".menu nav a", '[data-menu="icones"] a');
 hrefMarcador.init();
 
-criarDepoimentos(".lista-depoimentos");
+const depoimentos = new CriarDepoimentos(".lista-depoimentos");
+depoimentos.init();
+
 config(".tema div");
 modal(
   '[data-modal="ativar"]',
