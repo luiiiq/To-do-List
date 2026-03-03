@@ -167,5 +167,6 @@ export default function carrossel(
     enviarButton.addEventListener("click", validarEnviar);
     mudarSlide(0);
     transicao(true);
-  }
-}
+    console.log('oi');
+  };
+};
