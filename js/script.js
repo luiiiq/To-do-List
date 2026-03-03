@@ -1,5 +1,5 @@
 import ScrollSuave from "./modules/scroll-suave.js";
-import hrefMarcador from "./modules/href-marcador.js";
+import HrefMarcador from "./modules/href-marcador.js";
 import criarDepoimentos from "./modules/depoimentos.js";
 import config from "./modules/config.js";
 import modal from "./modules/modal.js";
@@ -15,7 +15,9 @@ import dataTarefa from "./modules/data.js";
 const scrolSuave = new ScrollSuave('[data-scrol="suave"]');
 scrolSuave.init();
 
-hrefMarcador(".menu nav a", '[data-menu="icones"] a');
+const hrefMarcador = new HrefMarcador(".menu nav a", '[data-menu="icones"] a');
+hrefMarcador.init();
+
 criarDepoimentos(".lista-depoimentos");
 config(".tema div");
 modal(
