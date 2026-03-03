@@ -1,0 +1,665 @@
+.tarefas {
+  font-family: "Poppins", monospace;
+  padding: 1.5rem 2.5rem;
+  background: var(--fundo-1);
+}
+
+/* ! Botão de Criar Atividades */
+.texto-criar {
+  background: #e7dbef;
+  font-weight: 500;
+  font-size: 1.3rem;
+  height: 80px;
+  padding: 1rem 1.5rem;
+  position: absolute;
+}
+
+.texto-criar::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -27px;
+  right: 10px;
+  width: 0px;
+  height: 0px;
+  border-top: 14px solid #e7dbef;
+  border-bottom: 14px solid transparent;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+}
+
+.criar-tarefa img {
+  width: 100px;
+  margin-top: 7rem;
+  margin-left: 17rem;
+  cursor: pointer;
+}
+
+.header-tarefa {
+  position: relative;
+}
+
+.criar-tarefa {
+  position: fixed;
+  bottom: 10px;
+  right: 50px;
+  z-index: 100;
+}
+
+@media (max-width: 544px) {
+  .texto-criar {
+    font-size: 1.1rem;
+    height: 60px;
+  }
+  .criar-tarefa img {
+    width: 80px;
+    margin-left: 15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .texto-criar {
+    font-size: 1.1rem;
+    height: 60px;
+    left: 1.2rem;
+  }
+  .criar-tarefa img {
+    width: 80px;
+    margin-left: 15rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .criar-tarefa {
+    padding: 3rem 0 5rem 0;
+  }
+
+  .js [data-menu="fixed"] {
+    padding-top: 8rem;
+  }
+}
+
+@media (max-width: 370px) {
+  .texto-criar {
+    padding: 1rem 0.4rem;
+    font-size: 1.1rem;
+    height: 60px;
+    left: 3rem;
+  }
+  .criar-tarefa img {
+    width: 70px;
+    margin-left: 13rem;
+  }
+}
+
+@media (max-width: 335px) {
+  .texto-criar {
+    padding: 1rem 0.3rem;
+    font-size: 1.05rem;
+    width: 160px;
+  }
+  .criar-tarefa img {
+    width: 64px;
+    margin-left: 10rem;
+  }
+}
+
+/* ! Modal */
+.modal * {
+  font-family: "Poppins", monospace;
+}
+
+.modal {
+  display: none;
+  min-height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  padding-top: 2.5rem;
+  z-index: 200;
+}
+
+@keyframes modal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.modal.ativo {
+  display: block;
+  animation: modal 0.4s forwards;
+}
+
+.form-tarefa {
+  padding: 1.5rem 2.5rem;
+  background: var(--atividade-form-bg);
+  min-width: 600px;
+  justify-self: center;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+  position: relative;
+  box-shadow: 0 0 0 2px #f1ecf4;
+}
+
+.fechar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid #fcf7ff;
+  color: #fcf7ff;
+  background: #301566;
+  cursor: pointer;
+  position: absolute;
+  top: -25px;
+  right: -10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.form-tarefa h1 {
+  color: #fcf7ff;
+  font-weight: 500;
+  font-size: 1.5rem;
+  text-align: left;
+}
+
+.item-form input,
+.costumizart-select {
+  display: block;
+  background: #f1ecf4;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 16px;
+  font-size: 1.2rem;
+  outline: none;
+  width: 95%;
+  margin-left: 1rem;
+}
+
+.item-form input {
+  color: #807b88;
+}
+
+.costumizart-select {
+  color: #c1c1c2;
+  width: 95%;
+}
+
+.item-form ::placeholder {
+  color: #c1c1c2;
+}
+
+.item-form label {
+  color: #e7dbef;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.item-form label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e01717;
+  margin-right: 5px;
+}
+
+.item-form label.feita::before,
+.item-form.valido label::before,
+.item-form.categoria-valida label[for="categoria"]::before {
+  background: #29ff0c;
+}
+
+.item-form {
+  margin-bottom: 1rem;
+}
+
+.item-form.valido input {
+  border: 2px solid #29ff0c;
+}
+
+.opcoes,
+.categoria-aberta {
+  display: none;
+  margin-top: 1rem;
+}
+
+.opcoes.abrir,
+.categoria-aberta.abrir,
+.categoria-aberta.abrir .opcoes {
+  display: block;
+  animation: opcoes 0.3s forwards;
+}
+@keyframes opcoes {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.opcoes div {
+  color: #807b88;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.prioridade .opcoes p,
+.categoria .opcoes div {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+}
+
+.prioridade .opcoes p::before,
+.categoria .opcoes div::before {
+  content: "";
+  box-sizing: border-box;
+  width: 18px;
+  margin-right: 6px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #3b393f;
+}
+
+.prioridade .opcoes div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.prioridade .opcoes img {
+  width: 15px;
+  grid-column: 2;
+}
+
+.status .opcoes div::before {
+  content: "";
+  box-sizing: border-box;
+  width: 18px;
+  margin-right: 6px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #3b393f;
+}
+
+.opcoes div.ativo::before,
+.categoria .opcoes div.ativo::before {
+  border: 2px solid #5f29cc;
+  box-shadow:
+    inset 0 0 0 4px #f1ecf4,
+    inset 0 0 0 10px #5f29cc;
+}
+
+.prioridade .opcoes div.ativo p::before {
+  border: 2px solid #5f29cc;
+  box-shadow:
+    inset 0 0 0 4px #f1ecf4,
+    inset 0 0 0 10px #5f29cc;
+}
+
+.selecione {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1px 0px;
+}
+
+.selecione.texto-selecionado {
+  color: #807b88;
+}
+
+.costumizart-select.texto-selecionado {
+  border: 2px solid #29ff0c;
+}
+
+.selecione::after {
+  content: "▼";
+  color: #222025;
+}
+
+.info-sem-categoria,
+.categoria-aberta label {
+  color: #807b88;
+  margin-top: 1rem;
+}
+
+.categoria-aberta label::before {
+  background: #222025;
+}
+
+.categoria-aberta input {
+  background: #d9d9d9;
+  width: 100%;
+}
+
+.categoria-aberta button {
+  background: #5f29cc;
+  outline: none;
+  border: none;
+  color: #fcf7ff;
+  font-size: 1.3rem;
+  padding: 3px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-categoria {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+
+.btns-form {
+  padding-left: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.btns-form button {
+  font-size: 1.4rem;
+  margin-right: 1.4rem;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  padding: 3px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.btns-form button:nth-of-type(1) {
+  background: var(--btn-salvar);
+  color: #f1ecf4;
+}
+
+.btns-form button:nth-of-type(2) {
+  background: #fcf7ff;
+  color: #908d93;
+}
+
+.erro {
+  color: #e01717;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-left: 1rem;
+  animation: erro 0.2s forwards;
+}
+
+@keyframes erro {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (max-width: 760px) {
+  .form-tarefa {
+    padding: 1.5rem 2.5rem;
+    min-width: 400px;
+  }
+  .btn-categoria {
+    gap: 45px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 593px) {
+  .form-tarefa {
+    padding: 1.5rem 2.3rem;
+    max-width: 300px;
+  }
+  .btn-categoria {
+    gap: 15px;
+  }
+  .btn-categoria button {
+    margin-left: 1rem;
+  }
+  .item-form input,
+  .costumizart-select {
+    font-size: 1.2rem;
+    width: 80%;
+    margin-left: 0.7rem;
+  }
+  .form-tarefa h1 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 504px) {
+  .form-tarefa {
+    padding: 1.5rem 2.1rem;
+    min-width: 200px;
+  }
+  .btn-categoria {
+    gap: 15px;
+  }
+
+  .form-tarefa h1 {
+    font-size: 1.23rem;
+    margin-bottom: 1rem;
+  }
+  .btns-form {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .form-tarefa {
+    padding: 1.5rem 0.5rem;
+    min-width: 100px;
+  }
+  .item-form label {
+    font-size: 1.1rem;
+    justify-self: center;
+  }
+  .item-form input,
+  .costumizart-select {
+    font-size: 1.1rem;
+    width: 70%;
+    justify-self: center;
+  }
+  .form-tarefa h1 {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .modal {
+    min-height: 30rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (max-width: 355px) {
+  .form-tarefa {
+    max-width: 180px;
+  }
+
+  .opcoes p {
+    margin-right: 10px;
+  }
+}
+
+/* ! Lista de Tarefas */
+.tarefa-flex {
+  border: 1px solid var(--texto-fundo-1);
+  border-radius: 10px;
+  background: var(--fundo-1);
+  margin: 1rem 0rem 2rem 0;
+  min-height: 100px;
+}
+
+.item-info,
+.item-acoes {
+  display: flex;
+}
+
+.tarefa-container {
+  padding-bottom: 12rem;
+}
+
+.tarefa-item {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--tarefa-categoria-bg);
+  border-radius: 10px;
+  margin: 0.4rem 1.5rem 0.6rem 1.5rem;
+  border: 2px solid transparent;
+}
+
+.item-info {
+  flex-direction: column;
+  position: relative;
+}
+
+.marcador {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #fcf7ff;
+  border-radius: 50%;
+  margin-right: 15px;
+  margin-top: 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.marcador.atv-feita {
+  border: 2px solid #fcf7ff;
+  box-shadow:
+    inset 0 0 0 3px #fcf7ff,
+    inset 0 0 0 10px var(--tarefa-categoria-bg);
+}
+
+.tarefa-item.atv-feita {
+  border: 2px solid #1b0933;
+}
+
+.h2-item {
+  display: flex;
+  align-items: center;
+  margin-left: 3rem;
+  color: #fcf7ff;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.p-item {
+  display: flex;
+  margin-left: 3rem;
+  align-items: center;
+  gap: 5px;
+  color: #dbbfff;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.span-item {
+  color: #1b0933;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.js .span-item.atrasou {
+  color: #e01717;
+}
+
+.js .span-item.hoje {
+  color: #29ff0c;
+}
+
+.h1-tarefa {
+  color: var(--texto-fundo-1);
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin: 1rem 0 0rem 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.h1-tarefa::before {
+  content: "";
+  width: 25px;
+  height: 5px;
+  background: #e01717;
+  margin-right: 5px;
+}
+
+.h1-tarefa.status::before {
+  background: #e01717;
+}
+
+.h1-tarefa.progresso::before {
+  background: #ffe555;
+}
+
+.h1-tarefa.feita::before {
+  background: #29ff0c;
+}
+
+.item-acoes img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.item-acoes img:hover {
+  transform: scale(1.1) !important;
+}
+
+.item-acoes {
+  align-items: center;
+  gap: 30px;
+}
+
+.item-acoes img:nth-of-type(2) {
+  width: 35px;
+  height: 35px;
+  cursor: initial;
+}
+
+.item-acoes img:nth-of-type(3):hover {
+  transform: none;
+}
+
+@media (max-width: 470px) {
+  .item-acoes {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+  }
+  .p-item {
+    flex-wrap: wrap;
+  }
+}

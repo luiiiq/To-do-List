@@ -1,0 +1,65 @@
+[data-menu="mobile"] {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .js [data-menu="mobile"] {
+    display: flex;
+    align-items: center;
+    justify-self: right;
+    padding: 10px;
+    margin: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    z-index: 200;
+  }
+
+  .js [data-menu="mobile"].inativo::before {
+    content: "";
+    display: inline-block;
+    width: 30px;
+    height: 3px;
+    background: #fcf7ff;
+    box-shadow:
+      0 7px #fcf7ff,
+      0 -7px #fcf7ff;
+    transition: 0.3s ease;
+  }
+
+  .js [data-menu="mobile"].ativo::before {
+    content: "";
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    background-image: url("../img/nav-hamburguer.svg");
+    transition: 0.3s ease;
+  }
+
+  .marca {
+    position: relative;
+  }
+
+  .js [data-menu="lista"] {
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    padding: 2rem 0 1rem 2.2rem;
+    background: #5f29cc;
+    gap: 20px;
+  }
+
+  .js [data-menu="lista"] li {
+    max-width: 120px;
+  }
+
+  .js [data-menu="lista"].abrir {
+    display: flex;
+  }
+}

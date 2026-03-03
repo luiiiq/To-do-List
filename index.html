@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sanchez:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script>
+      document.documentElement.className += " js";
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="menu">
+        <a href="./index.html"
+          ><img class="marca" src="./img/marca.svg" alt="Marca"
+        /></a>
+        <nav>
+          <button
+            data-menu="mobile"
+            class="inativo"
+            aria-expanded="false"
+            aria-controls="menu"
+          ></button>
+          <ul data-menu="lista">
+            <li><a href="./index.html">INÍCIO</a></li>
+            <li><a href="./pag-extras/tarefas.html">TAREFAS</a></li>
+            <li><a href="./pag-extras/categoria.html">CATEGORIAS</a></li>
+            <li><a href="./pag-extras/perfil.html">PERFIL</a></li>
+          </ul>
+        </nav>
+        <nav data-menu="fixed" aria-label="Navegação para Mobile">
+          <ul data-menu="icones">
+            <li>
+              <a href="./index.html"
+                ><img src="./img/inicio.svg" alt="Inicio"
+              /></a>
+            </li>
+            <li>
+              <a href="./pag-extras/tarefas.html"
+                ><img src="./img/tarefas.svg" alt="Tarefas"
+              /></a>
+            </li>
+            <li>
+              <a href="./pag-extras/categoria.html"
+                ><img src="./img/categorias.svg" alt="Categorias"
+              /></a>
+            </li>
+            <li>
+              <a href="./pag-extras/perfil.html"
+                ><img src="./img/perfil.svg" alt="Perfil"
+              /></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section
+        class="introducao"
+        aria-label="Introdução à página e benefícios"
+        data-scrol="suave"
+      >
+        <div class="temas-grid">
+          <h1 class="titulo">Bem-vindo(a) à sua To-do List</h1>
+          <div class="modo" data-tema="button"></div>
+        </div>
+        <ul class="beneficios">
+          <li>
+            <div>
+              <img src="./img/organizar-icone.svg" alt="Organizar" />
+            </div>
+            <div>
+              <h2>Organize suas Tarefas</h2>
+              <p>Categorias, prioridades e status da tarefa</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <img src="./img/tempo.svg" alt="Tempo" />
+            </div>
+            <div>
+              <h2>Tempo Restante</h2>
+              <p>Defina a data limite para realizar a atividade</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <img src="./img/tema.svg" alt="Temas" />
+            </div>
+            <div>
+              <h2>Temas</h2>
+              <p>Escolha o Modo da sua preferência</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <img src="./img/marcador.svg" alt="Marcador" />
+            </div>
+            <div>
+              <h2>Produtividade</h2>
+              <p>Aumente seu rendimento e nunca mais esqueça de uma tarefa</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section
+        class="carrossel"
+        aria-label="Formulário para conhecer o usuário"
+        data-scrol="suave"
+      >
+        <h1 class="titulo">Queremos te conhecer melhor!</h1>
+        <div class="carrossel-indicadores">
+          <button class="dot"></button>
+          <button class="dot"></button>
+          <button class="dot"></button>
+          <button class="dot"></button>
+        </div>
+        <div class="carrossel-wrapper">
+          <ul class="carrossel-track">
+            <li class="carrossel-item">
+              <h2 for="nome">1- Qual o seu nome?</h2>
+              <input type="text" id="nome" name="nome" />
+            </li>
+            <li class="carrossel-item">
+              <div>
+                <h2>2- Já se sentiu sobrecarregado com tantas tarefas?</h2>
+                <div class="opcoes-item">
+                  <div>
+                    <input
+                      type="radio"
+                      id="sim"
+                      name="sobrecarregado"
+                      value="sim"
+                    />
+                    <label for="sim">Sim</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      id="nao"
+                      name="sobrecarregado"
+                      value="nao"
+                    />
+                    <label for="nao">Não</label>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="carrossel-item">
+              <div>
+                <h2>3- Qual a melhor forma de se organizar na sua opinião?</h2>
+                <div class="opcoes-item">
+                  <div>
+                    <input
+                      type="radio"
+                      id="categoria"
+                      name="organizar"
+                      value="categoria"
+                    />
+                    <label for="categoria"
+                      >Separar as tarefas por categoria</label
+                    >
+                  </div>
+
+                  <div>
+                    <input
+                      type="radio"
+                      id="tempo"
+                      name="organizar"
+                      value="tempo"
+                    />
+                    <label for="tempo"
+                      >Saber o tempo limite de entrega da tarefa</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="carrossel-item">
+              <div>
+                <h2>4- O que mais te atrapalha na hora de se organizar?</h2>
+                <div class="opcoes-item">
+                  <div>
+                    <input
+                      type="radio"
+                      id="multi-tarefas"
+                      name="atrapalha"
+                      value="multi-tarefas"
+                    />
+                    <label for="multi-tarefas"
+                      >Me perco com tantas tarefas</label
+                    >
+                  </div>
+
+                  <div>
+                    <input
+                      type="radio"
+                      id="datas"
+                      name="atrapalha"
+                      value="datas"
+                    />
+                    <label for="datas">Esqueço das datas</label>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="botoes-controle">
+          <button aria-label="Botão de Voltar" class="prev">VOLTAR</button>
+          <button aria-label="Botão de Avançar" class="prox">PRÓXIMO</button>
+          <button aria-label="Botão de Enviar" type="submit" class="enviar">
+            ENVIAR
+          </button>
+        </div>
+      </section>
+      <section class="depoimentos" aria-label="Depoimentos" data-scrol="suave">
+        <h1 class="titulo">Depoimentos dos usuários</h1>
+        <ul class="lista-depoimentos"></ul>
+      </section>
+      <section
+        class="avancar-tarefa"
+        aria-label="Ir para a tarefa"
+        data-scrol="suave"
+      >
+        <div class="img-wrapper">
+          <img src="./img/img-tarefa.jpg" alt="Criar Tarefa" />
+          <div class="info-btn">
+            <button class="glass-btn">
+              <a href="./pag-extras/tarefas.html">CRIAR TAREFA</a>
+            </button>
+            <div class="texto-btn">
+              <p>Pronto para ser mais produtivo?</p>
+              <span>Comece Já!</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer" aria-label="Footer">
+      <div class="lista-flex">
+        <a href="./index.html"><img src="./img/marca.svg" alt="Marca" /></a>
+        <ul class="lista-contato">
+          <h1>CONTATO</h1>
+          <li>+55 11 99999-9999</li>
+          <li class="email">luizabenevides2007@gmail.com</li>
+          <li>São Paulo, SP</li>
+          <li>
+            <div class="redes">
+              <a href=""
+                ><img src="./img/instagram-redes.svg" alt="Instagram"
+              /></a>
+              <a href=""
+                ><img src="./img/facebook-redes.svg" alt="Facebook"
+              /></a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </footer>
+    <script src="./dist/main.js"></script>
+  </body>
+</html>

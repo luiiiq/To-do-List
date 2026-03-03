@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sanchez:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script>
+      document.documentElement.className += " js";
+    </script>
+  </head>
+  <body>
+    <header class="header-tarefa">
+      <div class="menu">
+        <a href="../index.html"
+          ><img class="marca" src="../img/marca.svg" alt="Marca"
+        /></a>
+        <nav>
+          <button
+            data-menu="mobile"
+            class="inativo"
+            aria-expanded="false"
+            aria-controls="menu"
+          ></button>
+          <ul data-menu="lista">
+            <li><a href="../index.html">INÍCIO</a></li>
+            <li><a href="./tarefas.html">TAREFAS</a></li>
+            <li><a href="./categoria.html">CATEGORIAS</a></li>
+            <li><a href="./perfil.html">PERFIL</a></li>
+          </ul>
+        </nav>
+        <nav data-menu="fixed" aria-label="Navegação para Mobile">
+          <ul data-menu="icones">
+            <li>
+              <a href="../index.html"
+                ><img src="../img/inicio.svg" alt="Inicio"
+              /></a>
+            </li>
+            <li>
+              <a href="../pag-extras/tarefas.html"
+                ><img src="../img/tarefas.svg" alt="Tarefas"
+              /></a>
+            </li>
+            <li>
+              <a href="../pag-extras/categoria.html"
+                ><img src="../img/categorias.svg" alt="Categorias"
+              /></a>
+            </li>
+            <li>
+              <a href="../pag-extras/perfil.html"
+                ><img src="../img/perfil.svg" alt="Perfil"
+              /></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="tarefas" aria-label="Tarefas">
+      <div class="tarefa-container">
+        <div class="tarefa-flex">
+          <h1 class="h1-tarefa fazer">A Fazer</h1>
+        </div>
+        <div class="tarefa-flex">
+          <h1 class="h1-tarefa progresso">Em Progresso</h1>
+        </div>
+        <div class="tarefa-flex" data-tarefa="feita">
+          <h1 class="h1-tarefa feita">Feita</h1>
+        </div>
+      </div>
+      <div class="criar-tarefa">
+        <div class="texto-criar"><p>Crie sua primeira atividade</p></div>
+        <img data-modal="ativar" src="../img/criar.svg" alt="Criar Tarefa" />
+      </div>
+    </section>
+
+    <section
+      data-modal="container"
+      class="modal"
+      aria-label="Formulário de nova atividade"
+    >
+      <form action="" class="form-tarefa">
+        <h1>Adicionar / Atualizar Tarefa</h1>
+        <div class="fechar">X</div>
+        <div class="item-form">
+          <label for="titulo">Título da Tarefa</label>
+          <input type="text" id="titulo" name="titulo" required />
+        </div>
+        <div class="item-form status">
+          <label for="status">Status</label>
+          <div class="costumizart-select">
+            <div class="selecione">Selecione</div>
+            <div class="opcoes">
+              <div class="A Fazer">A Fazer</div>
+              <div class="Em Progresso">Em Progresso</div>
+              <div class="Feita">Feita</div>
+            </div>
+          </div>
+        </div>
+        <div class="item-form prioridade">
+          <label for="prioridade">Prioridade</label>
+          <div class="costumizart-select">
+            <div class="selecione">Selecione</div>
+            <div class="opcoes">
+              <div class="Baixa">
+                <p>Baixa</p>
+                <img src="../img/bandeira-baixa.svg" alt="Bandeira-baixa" />
+              </div>
+              <div class="Normal">
+                <p>Normal</p>
+                <img src="../img/bandeira-normal.svg" alt="Bandeira-normal" />
+              </div>
+              <div class="Alta">
+                <p>Alta</p>
+                <img src="../img/bandeira-alta.svg" alt="Bandeira-alta" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item-form categoria">
+          <label for="categoria">Categoria</label>
+          <div class="costumizart-select">
+            <div class="selecione">Selecione</div>
+            <div class="categoria-aberta">
+              <div class="opcoes"></div>
+              <div class="info-sem-categoria">
+                <p>Você ainda não criou nenhuma categoria</p>
+              </div>
+              <div class="btn-categoria">
+                <div>
+                  <label for="criar-categoria">Criar Categoria</label>
+                  <input
+                    type="text"
+                    id="criar-categoria"
+                    name="criar-categoria"
+                  />
+                </div>
+                <div>
+                  <button data-button="categoria">CRIAR</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-form">
+          <label for="prazo">Adicionar Prazo para Tarefa</label>
+          <input
+            type="text"
+            id="prazo"
+            name="prazo"
+            maxlength="10"
+            placeholder="Ex: 12/03/2030"
+            required
+          />
+        </div>
+        <div class="btns-form">
+          <button type="submit">SALVAR</button>
+          <button type="submit">CANCELAR</button>
+        </div>
+        <div class="js-erro-button"></div>
+      </form>
+    </section>
+    <script src="../dist/main.js"></script>
+  </body>
+</html>
