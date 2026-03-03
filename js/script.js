@@ -1,7 +1,7 @@
 import ScrollSuave from "./modules/scroll-suave.js";
 import HrefMarcador from "./modules/href-marcador.js";
 import CriarDepoimentos from "./modules/depoimentos.js";
-import config from "./modules/config.js";
+import Config from "./modules/config.js";
 import modal from "./modules/modal.js";
 import formTarefas from "./modules/tarefas-form.js";
 import carrossel from "./modules/carrossel.js";
@@ -21,7 +21,9 @@ hrefMarcador.init();
 const depoimentos = new CriarDepoimentos(".lista-depoimentos");
 depoimentos.init();
 
-config(".tema div");
+const configPerfil = new Config('[data-tema="config"]');
+configPerfil.init();
+
 modal(
   '[data-modal="ativar"]',
   ".modal",
