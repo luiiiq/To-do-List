@@ -4,7 +4,7 @@ import CriarDepoimentos from "./modules/depoimentos.js";
 import Config from "./modules/config.js";
 import Modal from "./modules/modal.js";
 import FormTarefas from "./modules/tarefas-form.js";
-import carrossel from "./modules/carrossel.js";
+import Carrossel from "./modules/carrossel.js";
 import menuHamburguer from "./modules/menu-hamburguer.js";
 import temas from "./modules/temas.js";
 import criarTarefas from "./modules/criar-tarefas.js";
@@ -42,17 +42,19 @@ const form = new FormTarefas({
   enviar: ".btns-form button:nth-of-type(1)",
   criarCategoria: '[data-button="categoria"]',
 });
-
 form.init();
 
-carrossel(
+const carrossel = new Carrossel(
   ".carrossel-wrapper",
   ".carrossel-track",
   ".prev",
   ".prox",
   ".enviar",
   ".botoes-controle button",
+  ".carrossel"
 );
+carrossel.init();
+
 menuHamburguer('[data-menu="mobile"]', '[data-menu="lista"]');
 temas('[data-tema="button"]');
 criarTarefas();

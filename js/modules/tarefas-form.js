@@ -256,10 +256,11 @@ export default class FormTarefas{
   };
 
   init() {
+    if (!this.input) return;
     if (this.cesta.length > 0) {
       this.textoCriar.style.display = "none";
     };
-    if ( this.cesta.length > 0 && this.input && this.prazo &&
+    if (this.input && this.prazo &&
         this.radio.length &&
         this.opcoesDiv.length &&
         this.botaoEnviar &&
