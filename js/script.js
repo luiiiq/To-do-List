@@ -3,7 +3,7 @@ import HrefMarcador from "./modules/href-marcador.js";
 import CriarDepoimentos from "./modules/depoimentos.js";
 import Config from "./modules/config.js";
 import Modal from "./modules/modal.js";
-import formTarefas from "./modules/tarefas-form.js";
+import FormTarefas from "./modules/tarefas-form.js";
 import carrossel from "./modules/carrossel.js";
 import menuHamburguer from "./modules/menu-hamburguer.js";
 import temas from "./modules/temas.js";
@@ -33,14 +33,18 @@ const modal = new Modal(
 );
 modal.init();
 
-formTarefas(
-  "#titulo",
-  "#prazo",
-  ".opcoes div",
-  ".selecione",
-  ".btns-form button:nth-of-type(1)",
-  '[data-button="categoria"]',
-);
+
+const form = new FormTarefas({
+  input: "#titulo",
+  prazo: "#prazo",
+  radios: ".opcoes div",
+  opcoes: ".selecione",
+  enviar: ".btns-form button:nth-of-type(1)",
+  criarCategoria: '[data-button="categoria"]',
+});
+
+form.init();
+
 carrossel(
   ".carrossel-wrapper",
   ".carrossel-track",
