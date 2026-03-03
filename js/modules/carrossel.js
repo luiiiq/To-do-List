@@ -1,172 +1,166 @@
-export default function carrossel(
-  slideWrapper,
-  slideLista,
-  prev,
-  prox,
-  enviar,
-  buttonLista,
-) {
-  const wrapper = document.querySelector(slideWrapper);
-  const slideContainer = document.querySelector(slideLista);
-  const prevButton = document.querySelector(prev);
-  const proxButton = document.querySelector(prox);
-  const enviarButton = document.querySelector(enviar);
-  const controleButtons = document.querySelectorAll(buttonLista);
-  let distancia = {
-    posInicial: 0,
-    posFinal: 0,
-    movimento: 0,
+export default class Carrossel {
+  constructor(wrapper, container, prev, prox, enviar, buttonsControles, carrossel) {
+    this.wrapper = document.querySelector(wrapper);
+    this.slideContainer = document.querySelector(container);
+    this.prevButton = document.querySelector(prev);
+    this.proxButton = document.querySelector(prox);
+    this.enviarButton = document.querySelector(enviar);
+    this.controleButtons = document.querySelectorAll(buttonsControles);
+    this.ativarProx = this.ativarProx.bind(this);
+    this.ativarPrev = this.ativarPrev.bind(this);
+    this.validarEnviar = this.validarEnviar.bind(this);
+    this.carrossel = document.querySelector(carrossel);
   };
-  let slideArray;
-  let index;
 
-  const carrossel = document.querySelector(".carrossel");
+  moverSlide(distX) {
+    const limiteEsquerdo = 0;
+    const limiteDireito = this.wrapper.offsetWidth - this.slideContainer.scrollWidth;
+    const distanciaLimite = Math.max(
+      limiteDireito,
+      Math.min(limiteEsquerdo, distX),
+    );
+    this.slideContainer.style.transform = `translate3d(${distanciaLimite}px, 0, 0)`;
+  };
 
-  if (
-    wrapper &&
-    slideContainer &&
-    prevButton &&
-    proxButton &&
-    controleButtons.length
-  ) {
-    if (localStorage.getItem("carrosselRespondido")) {
-      carrossel.remove();
-    }
-    function moverSlide(distX) {
-      const limiteEsquerdo = 0;
-      const limiteDireito = wrapper.offsetWidth - slideContainer.scrollWidth;
-      const distanciaLimitada = Math.max(
-        limiteDireito,
-        Math.min(limiteEsquerdo, distX),
-      );
-      distancia.posicaoMovida = distanciaLimitada;
-      slideContainer.style.transform = `translate3d(${distanciaLimitada}px, 0, 0)`;
-    }
+  //! Slides Config
+  posicaoSlide(slide) {
+    const margin = this.slideContainer.offsetWidth - slide.offsetWidth;
+    return -(slide.offsetLeft - margin);
+  };
 
-    // ! Slide Config
-    function posicaoSlide(slide) {
-      const margin = slideContainer.offsetWidth - slide.offsetWidth;
-      return -(slide.offsetLeft - margin);
-    }
-
-    function configSlide() {
-      slideArray = [...slideContainer.children].map((elemento) => {
-        const posicao = posicaoSlide(elemento);
-        return {
-          posicao,
-          elemento,
-        };
-      });
-    }
-    configSlide();
-
-    const dots = document.querySelectorAll(".dot");
-    function slideNav(indexItem) {
-      const ultimoItem = slideArray.length - 1;
-      index = {
-        prev: indexItem - 1 < 0 ? undefined : indexItem - 1,
-        atual: indexItem,
-        prox: indexItem === ultimoItem ? undefined : indexItem + 1,
+  configSlide() {
+    this.slideArray = [...this.slideContainer.children].map((elemento) => {
+      const posicao = this.posicaoSlide(elemento);
+      return {
+        posicao,
+        elemento
       };
-      if (dots.length) {
-        if (index.atual === 3) {
-          const enviarButton = document.querySelector(".enviar");
-          enviarButton.style.display = "block";
-          proxButton.style.display = "none";
-        } else {
-          const enviarButton = document.querySelector(".enviar");
-          enviarButton.style.display = "none";
-          proxButton.style.display = "block";
-        }
-        dots.forEach((dot) => {
-          dot.classList.remove("item-atual");
-        });
-        dots[index.atual]?.classList.add("item-atual");
+    });
+  };
 
-        const nomeInput = slideContainer.querySelector("#nome");
-        if (nomeInput.value.trim() !== "") {
-          dots[0].classList.add("item-feito");
-        } else {
-          dots[0].classList.remove("item-feito");
-        }
-
-        const carrosselItems = document.querySelectorAll(".carrossel-item");
-        carrosselItems.forEach((elemento, index) => {
-          const inputs = elemento.querySelectorAll("input");
-          inputs.forEach((input) => {
-            if (input.checked) {
-              dots[index].classList.add("item-feito");
-            }
-          });
-        });
-      }
-    }
-
-    function mudarSlide(index) {
-      moverSlide(slideArray[index].posicao);
-      slideNav(index);
-      distancia.posFinal = slideArray[index].posicao;
-    }
-
-    function ativarPrev() {
-      if (index.prev !== undefined) {
-        mudarSlide(index.prev);
+  slideNav(indexAtual) {
+    const dots = document.querySelectorAll(".dot");
+    const ultimoItem = this.slideArray.length - 1;
+    this.index = {
+      prev: indexAtual - 1 < 0 ? undefined : indexAtual - 1,
+      atual: indexAtual,
+      prox: indexAtual === ultimoItem ? undefined : indexAtual + 1
+    };
+    if (dots.length) {
+      if (this.index.atual === 3) {
+        const enviarButton = document.querySelector(".enviar");
+        enviarButton.style.display = "block";
+        this.proxButton.style.display = "none";
       } else {
-        mudarSlide(0);
+        const enviarButton = document.querySelector(".enviar");
+        enviarButton.style.display = "none";
+        this.proxButton.style.display = "block";
       }
-    }
-
-    function ativarProx() {
-      if (index.prox !== undefined) {
-        mudarSlide(index.prox);
-      } else {
-        mudarSlide(slideArray.length - 1);
-      }
-    }
-
-    const div = document.createElement("div");
-    let valido = [];
-    function verificarValorInputs() {
-      valido.length = 0;
-      const inputs = slideContainer.querySelectorAll(".opcoes-item input");
-      const nomeInput = slideContainer.querySelector("#nome");
-      inputs.forEach((input) => {
-        if (input.checked) {
-          valido.push(input);
-        }
+      dots.forEach((dot) => {
+        dot.classList.remove("item-atual");
       });
+      dots[this.index.atual]?.classList.add("item-atual");
+
+      const nomeInput = this.slideContainer.querySelector("#nome");
       if (nomeInput.value.trim() !== "") {
-        valido.push(nomeInput.value.trim());
-      }
-    }
-
-    function validarEnviar() {
-      verificarValorInputs();
-      const pai = document.querySelector(".carrossel");
-      if (valido.length === 4) {
-        div.classList.remove("erro-slide");
-        div.innerText = "";
-        localStorage.setItem("carrosselRespondido", "true");
-        carrossel.remove();
-        window.location.href = "./index.html";
+        dots[0].classList.add("item-feito");
       } else {
+        dots[0].classList.remove("item-feito");
+      };
+
+      const carrosselItems = document.querySelectorAll(".carrossel-item");
+      carrosselItems.forEach((elemento, index) => {
+        const inputs = elemento.querySelectorAll("input");
+        inputs.forEach((input) => {
+          if (input.checked) {
+            dots[index].classList.add("item-feito");
+          };
+        });
+      });
+    };
+  };
+
+  mudarPosSlide(index) {
+    this.moverSlide(this.slideArray[index].posicao);
+    this.slideNav(index);
+  };
+
+  ativarProx() {
+    if (this.index.prox !== undefined) {
+      this.mudarPosSlide(this.index.prox);
+    } else {
+      this.mudarPosSlide(this.slideArray.length - 1);
+    };
+  };
+
+  ativarPrev() {
+    if (this.index.prev !== undefined) {
+      this.mudarPosSlide(this.index.prev);
+    } else {
+      this.mudarPosSlide(0);
+    };
+  };
+
+  verificarValorInputs() {
+    this.valido = [];
+    this.valido.length = 0;
+    const inputs = this.slideContainer.querySelectorAll(".opcoes-item input");
+    const nomeInput = this.slideContainer.querySelector("#nome");
+    inputs.forEach((input) => {
+      if (input.checked) {
+        this.valido.push(input);
+      };
+    });
+    if (nomeInput.value.trim() !== "") {
+      this.valido.push(nomeInput.value.trim());
+    };
+  };
+
+  validarEnviar() {
+    this.verificarValorInputs();
+    const pai = this.carrossel;
+    let div = pai.querySelector(".erro-slide");
+    if (this.valido.length === 4) {
+      if (div) {
+        div.remove();
+      };
+      div.classList.remove("erro-slide");
+      div.innerText = "";
+      localStorage.setItem("carrosselRespondido", "true");
+      this.carrossel.remove();
+      window.location.href = "./index.html";
+    } else {
+      if (!div) {
+        div = document.createElement("div");
         div.classList.add("erro-slide");
-        div.innerText = "Certifique-se de preencher todos os formulários!";
         pai.appendChild(div);
-      }
-    }
+      };
+      div.innerText = "Certifique-se de preencher todos os formulários!";
+    };
+  };
 
-    function transicao(statusTransicao) {
-      slideContainer.style.transition = statusTransicao
-        ? "transform 0.3s"
-        : "none";
-    }
+  // ! transição suave
+  transicao(estado) {
+    this.slideContainer.style.transition = estado
+      ? "transform 0.3s"
+      : "none";
+  };
 
-    prevButton.addEventListener("click", ativarPrev);
-    proxButton.addEventListener("click", ativarProx);
-    enviarButton.addEventListener("click", validarEnviar);
-    mudarSlide(0);
-    transicao(true);
-    console.log('oi');
+  init() {
+    if (localStorage.getItem("carrosselRespondido") && this.carrossel) {
+      this.carrossel.remove();
+    };
+    if (this.wrapper && this.slideContainer && this.prevButton && this.proxButton && this.enviarButton && this.controleButtons.length) {
+      this.proxButton.addEventListener('click', this.ativarProx);
+      this.prevButton.addEventListener('click', this.ativarPrev);
+      this.enviarButton.addEventListener("click", () =>
+        this.validarEnviar()
+      );
+      this.moverSlide();
+      this.configSlide();
+      this.mudarPosSlide(0);
+      this.transicao(true);
+    };
+    return this;
   };
 };
