@@ -1,9 +1,9 @@
+import ScrollSuave from "./modules/scroll-suave.js";
 import hrefMarcador from "./modules/href-marcador.js";
 import criarDepoimentos from "./modules/depoimentos.js";
 import config from "./modules/config.js";
 import modal from "./modules/modal.js";
 import formTarefas from "./modules/tarefas-form.js";
-import scrollSuave from "./modules/scroll-suave.js";
 import carrossel from "./modules/carrossel.js";
 import menuHamburguer from "./modules/menu-hamburguer.js";
 import temas from "./modules/temas.js";
@@ -11,6 +11,9 @@ import criarTarefas from "./modules/criar-tarefas.js";
 import criarCategoria from "./modules/criar-categoria.js";
 import resumoTarefasPerfil from "./modules/perfil-resumo.js";
 import dataTarefa from "./modules/data.js";
+
+const scrolSuave = new ScrollSuave('[data-scrol="suave"]');
+scrolSuave.init();
 
 hrefMarcador(".menu nav a", '[data-menu="icones"] a');
 criarDepoimentos(".lista-depoimentos");
@@ -30,7 +33,6 @@ formTarefas(
   ".btns-form button:nth-of-type(1)",
   '[data-button="categoria"]',
 );
-scrollSuave('[data-scrol="suave"]');
 carrossel(
   ".carrossel-wrapper",
   ".carrossel-track",
