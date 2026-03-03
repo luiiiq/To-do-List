@@ -1,78 +1,78 @@
-export default function modal(
-  modalButton,
-  modalContainer,
-  fecharButton,
-  cancelarButton,
-  modalItem,
-) {
-  const modalAtivar = document.querySelector(modalButton);
-  const modal = document.querySelector(modalContainer);
-  const fechar = document.querySelector(fecharButton);
-  const cancelar = document.querySelector(cancelarButton);
-  const modalForm = document.querySelector(modalItem);
+export default class Modal {
+  constructor(modalButton, modalContainer, fecharButton, cancelarButton, modalItem) {
+    this.modalAtivar = document.querySelector(modalButton);
+    this.modal = document.querySelector(modalContainer);
+    this.fechar = document.querySelector(fecharButton);
+    this.cancelar = document.querySelector(cancelarButton);
+    this.modalForm = document.querySelector(modalItem);
+    this.inputs = document.querySelectorAll(".form-tarefa input");
+    this.itensForm = document.querySelectorAll(".item-form .selecione");
 
-  if (modalAtivar && modal && fechar && cancelar && modalForm) {
-    const inputs = document.querySelectorAll(".form-tarefa input");
-    const itensForm = document.querySelectorAll(".item-form .selecione");
+    this.ativarModal = this.ativarModal.bind(this);
+    this.desativarModal = this.desativarModal.bind(this);
+  };
 
-    function ativarModal() {
-      modal.classList.add("ativo");
-    }
+  ativarModal() {
+    this.modal.classList.add("ativo");
+  };
 
-    function desativarModal(event) {
-      event.preventDefault();
-      modal.classList.remove("ativo");
-      inputs.forEach((input) => {
+  desativarModal(event) {
+    event.preventDefault();
+    this.modal.classList.remove("ativo");
+    this.inputs.forEach((input) => {
+      input.value = "";
+    });
+    const modalValidos = this.modal.querySelectorAll(".valido");
+    const modalFeitos = this.modal.querySelectorAll(".feita");
+    modalValidos.forEach((valido) => {
+      valido.classList.remove("valido");
+    });
+    modalFeitos.forEach((feito) => {
+      feito.classList.remove("feita");
+    });
+    this.itensForm.forEach((item) => {
+      item.innerText = "Selecione";
+      item.parentElement.classList.remove("texto-selecionado");
+      const selecione = item.parentElement.querySelector(".selecione");
+      selecione.classList.remove("texto-selecionado");
+    });
+    this.itensForm[2].parentElement.parentElement.classList.remove(
+      "categoria-valida",
+    );
+  };
+
+  clicarForaModal(event) {
+    if (event.target === this.modalForm) {
+      this.modal.classList.remove("ativo");
+      this.inputs.forEach((input) => {
         input.value = "";
       });
-      const modalValidos = modal.querySelectorAll(".valido");
-      const modalFeitos = modal.querySelectorAll(".feita");
+      const modalValidos = this.modal.querySelectorAll(".valido");
+      const modalFeitos = this.modal.querySelectorAll(".feita");
       modalValidos.forEach((valido) => {
         valido.classList.remove("valido");
       });
       modalFeitos.forEach((feito) => {
         feito.classList.remove("feita");
       });
-      itensForm.forEach((item) => {
+      this.itensForm.forEach((item) => {
         item.innerText = "Selecione";
         item.parentElement.classList.remove("texto-selecionado");
         const selecione = item.parentElement.querySelector(".selecione");
         selecione.classList.remove("texto-selecionado");
       });
-      itensForm[2].parentElement.parentElement.classList.remove(
+      this.itensForm[2].parentElement.parentElement.classList.remove(
         "categoria-valida",
       );
-    }
+    };
+  };
 
-    function clicarForaModal(event) {
-      if (event.target === modalForm) {
-        modal.classList.remove("ativo");
-        inputs.forEach((input) => {
-          input.value = "";
-        });
-        const modalValidos = modal.querySelectorAll(".valido");
-        const modalFeitos = modal.querySelectorAll(".feita");
-        modalValidos.forEach((valido) => {
-          valido.classList.remove("valido");
-        });
-        modalFeitos.forEach((feito) => {
-          feito.classList.remove("feita");
-        });
-        itensForm.forEach((item) => {
-          item.innerText = "Selecione";
-          item.parentElement.classList.remove("texto-selecionado");
-          const selecione = item.parentElement.querySelector(".selecione");
-          selecione.classList.remove("texto-selecionado");
-        });
-        itensForm[2].parentElement.parentElement.classList.remove(
-          "categoria-valida",
-        );
-      }
-    }
-
-    modalAtivar.addEventListener("click", ativarModal);
-    fechar.addEventListener("click", desativarModal);
-    cancelar.addEventListener("click", (event) => desativarModal(event));
-    modalForm.addEventListener("click", (event) => clicarForaModal(event));
-  }
-}
+  init() {
+    if (this.modalAtivar && this.modal && this.fechar && this.cancelar && this.modalForm) {
+      this.modalAtivar.addEventListener("click", this.ativarModal);
+      this.fechar.addEventListener("click", this.desativarModal);
+      this.cancelar.addEventListener("click", (event) => this.desativarModal(event));
+      this.modalForm.addEventListener("click", (event) => this.clicarForaModal(event));
+    };
+  };
+};
