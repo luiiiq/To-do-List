@@ -7,7 +7,7 @@ import FormTarefas from "./modules/tarefas-form.js";
 import Carrossel from "./modules/carrossel.js";
 import MenuHamburguer from "./modules/menu-hamburguer.js";
 import Temas from "./modules/temas.js";
-import criarTarefas from "./modules/criar-tarefas.js";
+import CriarTarefas from "./modules/criar-tarefas.js";
 import criarCategoria from "./modules/criar-categoria.js";
 import resumoTarefasPerfil from "./modules/perfil-resumo.js";
 import dataTarefa from "./modules/data.js";
@@ -61,7 +61,9 @@ menuMobile.init();
 const temasPreferencia = new Temas('[data-tema="button"]');
 temasPreferencia.init();
 
-criarTarefas();
+const criarElementoTarefa = new CriarTarefas(".tarefa-flex");
+criarElementoTarefa.init();
+
 criarCategoria();
 resumoTarefasPerfil();
 dataTarefa();
