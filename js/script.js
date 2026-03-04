@@ -8,7 +8,7 @@ import Carrossel from "./modules/carrossel.js";
 import MenuHamburguer from "./modules/menu-hamburguer.js";
 import Temas from "./modules/temas.js";
 import CriarTarefas from "./modules/criar-tarefas.js";
-import criarCategoria from "./modules/criar-categoria.js";
+import CriarCategoria from "./modules/criar-categoria.js";
 import resumoTarefasPerfil from "./modules/perfil-resumo.js";
 import dataTarefa from "./modules/data.js";
 
@@ -64,6 +64,8 @@ temasPreferencia.init();
 const criarElementoTarefa = new CriarTarefas(".tarefa-flex");
 criarElementoTarefa.init();
 
-criarCategoria();
+const criarElementoCategoria = new CriarCategoria(".categoria-resumo", ".categoria-container",".js-accordion");
+criarElementoCategoria.init();
+
 resumoTarefasPerfil();
 dataTarefa();
