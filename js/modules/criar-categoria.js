@@ -11,9 +11,7 @@ export default class CriarCategoria {
 
   criarCategorias() {
     const btnCriar = document.querySelector(".criar-tarefa");
-    btnCriar.style.display = "none";
     const h1SemCategoria = document.querySelector(".categoria-h1");
-    h1SemCategoria.style.display = "none";
 
     this.listaItens = [];
     this.accordionContainer.innerHTML = "";
@@ -38,7 +36,15 @@ export default class CriarCategoria {
         return { categoria, titulos };
       },
     );
-    localStorage.setItem("this.", JSON.stringify(this.categoriasLista));
+    if (this.categoriasLista.length === 0) {
+      btnCriar.style.display = "block";
+      h1SemCategoria.style.display = "block";
+      return;
+    } else {
+      btnCriar.style.display = "none";
+      h1SemCategoria.style.display = "none";
+    };
+    localStorage.setItem("categoriasLista", JSON.stringify(this.categoriasLista));
     this.categoriasLista.forEach((elemento) => {
       const feitas = elemento.titulos.filter(
         (item) => item.status === "Feita",
