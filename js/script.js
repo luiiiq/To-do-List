@@ -10,7 +10,7 @@ import Temas from "./modules/temas.js";
 import CriarTarefas from "./modules/criar-tarefas.js";
 import CriarCategoria from "./modules/criar-categoria.js";
 import ResumoTarefasPerfil from "./modules/perfil-resumo.js";
-import dataTarefa from "./modules/data.js";
+import DataTarefa from "./modules/data.js";
 
 const scrolSuave = new ScrollSuave('[data-scrol="suave"]');
 scrolSuave.init();
@@ -70,4 +70,5 @@ criarElementoCategoria.init();
 const itensTarefasResumo = new ResumoTarefasPerfil('.perfil','[data-perfil="concluida"] h2', '[data-perfil="progresso"] h2', '[data-perfil="pendente"] h2');
 itensTarefasResumo.init();
 
-dataTarefa();
+const data = new DataTarefa('.tarefa-container');
+data.init();
