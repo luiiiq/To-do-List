@@ -1,55 +1,61 @@
-export default function resumoTarefasPerfil() {
-  const concluido = document.querySelector('[data-perfil="concluida"] h2');
-  const progresso = document.querySelector('[data-perfil="progresso"] h2');
-  const aFazer = document.querySelector('[data-perfil="pendente"] h2');
-  let cesta = JSON.parse(localStorage.getItem("cesta")) || [];
+export default class ResumoTarefasPerfil {
+  constructor(perfilGrid, concluido, progresso, aFazer) {
+    this.perfilGrid = document.querySelector(perfilGrid);
+    this.concluido = document.querySelector(concluido);
+    this.progresso = document.querySelector(progresso);
+    this.aFazer = document.querySelector(aFazer);
+    this.cesta = JSON.parse(localStorage.getItem("cesta")) || [];
+    this.listaConcluidas = [];
+    this.listaProgresso = [];
+    this.listaPendente = [];
+  };
+  tarefasConcluidas() {
+    this.cesta.map((elemento) => {
+      if (elemento.status === "Feita") {
+        this.listaConcluidas.push(elemento);
+      };
+    });
+    this.concluido.innerHTML = this.listaConcluidas.length;
+  };
 
-  if (concluido && progresso && aFazer) {
-    let listaConcluidas = [];
-    function tarefasConcluidas() {
-      cesta.map((elemento) => {
-        if (elemento.status === "Feita") {
-          listaConcluidas.push(elemento);
-        }
-      });
-      concluido.innerHTML = listaConcluidas.length;
-    }
-    tarefasConcluidas();
+  tarefasProgresso() {
+    this.cesta.map((elemento) => {
+      if (elemento.status === "Em Progresso") {
+        this.listaProgresso.push(elemento);
+      };
+    });
+    this.progresso.innerHTML = this.listaProgresso.length;
+  };
 
-    let listaProgresso = [];
-    function tarefasProgresso() {
-      cesta.map((elemento) => {
-        if (elemento.status === "Em Progresso") {
-          listaProgresso.push(elemento);
-        }
-      });
-      progresso.innerHTML = listaProgresso.length;
-    }
-    tarefasProgresso();
+  tarefasPendente() {
+    this.cesta.map((elemento) => {
+      if (elemento.status === "A Fazer") {
+        this.listaPendente.push(elemento);
+      };
+    });
+    this.aFazer.innerHTML = this.listaPendente.length;
+  };
 
-    let listaPendente = [];
-    function tarefasPendente() {
-      cesta.map((elemento) => {
-        if (elemento.status === "A Fazer") {
-          listaPendente.push(elemento);
-        }
-      });
-      aFazer.innerHTML = listaPendente.length;
-    }
-    tarefasPendente();
+  progressoTarefas() {
+    const progressoSpan = document.querySelector(".p-progresso span");
+    const soma =
+      this.listaConcluidas.length + this.listaProgresso.length + this.listaPendente.length;
+    const calculoProgresso = Math.round(
+      (this.listaConcluidas.length * 100) / soma,
+    );
+    progressoSpan.innerHTML = `${calculoProgresso}%`;
 
-    function progressoTarefas() {
-      const progressoSpan = document.querySelector(".p-progresso span");
-      const soma =
-        listaConcluidas.length + listaProgresso.length + listaPendente.length;
-      const calculoProgresso = Math.round(
-        (listaConcluidas.length * 100) / soma,
-      );
-      progressoSpan.innerHTML = `${calculoProgresso}%`;
+    const progressoBar = document.querySelector(".progresso-bar");
+    progressoBar.style.setProperty("--progresso", `${calculoProgresso}%`);
+  };
 
-      const progressoBar = document.querySelector(".progresso-bar");
-      progressoBar.style.setProperty("--progresso", `${calculoProgresso}%`);
-    }
-    progressoTarefas();
-  }
-}
+  init() {
+    if (this.perfilGrid) {
+      this.tarefasConcluidas();
+      this.tarefasProgresso();
+      this.tarefasPendente();
+      this.progressoTarefas();
+    };
+    return this;
+  };
+};
