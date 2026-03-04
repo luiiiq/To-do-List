@@ -1,44 +1,55 @@
-export default function temas(tema) {
-  const temaButton = document.querySelector(tema);
-  const html = document.documentElement;
+export default class Temas {
+  constructor(tema) {
+    this.temaButton = document.querySelector(tema);
+    this.html = document.documentElement;
+    this.controlarTemas = this.controlarTemas.bind(this);
+  };
 
-  const modo = localStorage.getItem("tema");
+  verificarModo() {
+    this.modo = localStorage.getItem("tema");
+    if (this.modo === "escuro") {
+      this.html.classList.add("tema-escuro");
+    } else if (this.modo === "claro") {
+      this.html.classList.remove("tema-escuro");
+    };
+  };
 
-  if (modo === "escuro") {
-    html.classList.add("tema-escuro");
-  } else if (modo === "claro") {
-    html.classList.remove("tema-escuro");
-  }
+  verificarImgModo() {
+    if (this.modo === "escuro") {
+      this.temaButton.innerHTML = `
+              <img src="./img/modo-escuro-ativado.svg" alt="Modo-escuro ativado">
+              <img src="./img/modo-claro-desativado.svg" alt="Modo-claro desativado">
+          `;
+    } else if (this.modo === "claro") {
+      this.temaButton.innerHTML = `
+            <img src="./img/modo-escuro-desativado.svg" alt="Modo-escuro desativado">
+            <img src="./img/modo-claro-ativado.svg" alt="Modo-claro ativado">
+          `;
+    };
+  };
+  controlarTemas() {
+    this.html.classList.toggle("tema-escuro");
+    if (this.html.classList.contains("tema-escuro")) {
+      localStorage.setItem("tema", "escuro");
+      this.temaButton.innerHTML = `
+            <img src="./img/modo-escuro-ativado.svg" alt="Modo-escuro ativado">
+            <img src="./img/modo-claro-desativado.svg" alt="Modo-claro desativado">
+          `;
+    } else {
+      localStorage.setItem("tema", "claro");
+      this.temaButton.innerHTML = `
+            <img src="./img/modo-escuro-desativado.svg" alt="Modo-escuro desativado">
+            <img src="./img/modo-claro-ativado.svg" alt="Modo-claro ativado">
+        `;
+    };
+  };
 
-  if (temaButton) {
-    if (modo === "escuro") {
-      temaButton.innerHTML = `
-                <img src="./img/modo-escuro-ativado.svg" alt="Modo-escuro ativado">
-                <img src="./img/modo-claro-desativado.svg" alt="Modo-claro desativado">
-            `;
-    } else if (modo === "claro") {
-      temaButton.innerHTML = `
-                <img src="./img/modo-escuro-desativado.svg" alt="Modo-escuro desativado">
-                <img src="./img/modo-claro-ativado.svg" alt="Modo-claro ativado">
-            `;
-    }
-    function controlarTemas() {
-      html.classList.toggle("tema-escuro");
-      if (html.classList.contains("tema-escuro")) {
-        localStorage.setItem("tema", "escuro");
-        temaButton.innerHTML = `
-                    <img src="./img/modo-escuro-ativado.svg" alt="Modo-escuro ativado">
-                    <img src="./img/modo-claro-desativado.svg" alt="Modo-claro desativado">
-                `;
-      } else {
-        localStorage.setItem("tema", "claro");
-        temaButton.innerHTML = `
-                    <img src="./img/modo-escuro-desativado.svg" alt="Modo-escuro desativado">
-                    <img src="./img/modo-claro-ativado.svg" alt="Modo-claro ativado">
-                `;
-      }
-    }
-
-    temaButton.addEventListener("click", controlarTemas);
-  }
+  init() {
+    this.verificarModo();
+    if (this.temaButton) {
+      this.verificarImgModo();
+      this.temaButton.addEventListener("click", this.controlarTemas);
+    };
+    return this;
+  };
 }
