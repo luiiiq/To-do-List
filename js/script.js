@@ -5,7 +5,7 @@ import Config from "./modules/config.js";
 import Modal from "./modules/modal.js";
 import FormTarefas from "./modules/tarefas-form.js";
 import Carrossel from "./modules/carrossel.js";
-import menuHamburguer from "./modules/menu-hamburguer.js";
+import MenuHamburguer from "./modules/menu-hamburguer.js";
 import temas from "./modules/temas.js";
 import criarTarefas from "./modules/criar-tarefas.js";
 import criarCategoria from "./modules/criar-categoria.js";
@@ -55,7 +55,9 @@ const carrossel = new Carrossel(
 );
 carrossel.init();
 
-menuHamburguer('[data-menu="mobile"]', '[data-menu="lista"]');
+const menuMobile = new MenuHamburguer('[data-menu="mobile"]', '[data-menu="lista"]', ["click", "touchstart"]);
+menuMobile.init();
+
 temas('[data-tema="button"]');
 criarTarefas();
 criarCategoria();

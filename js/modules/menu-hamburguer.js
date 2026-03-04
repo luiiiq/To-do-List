@@ -1,41 +1,47 @@
-export default function menuHamburguer(menuButton, navLista) {
-  const menu = document.querySelector(menuButton);
-  const nav = document.querySelector(navLista);
+export default class MenuHamburguer {
+  constructor(menuButton, navLista, eventos) {
+    this.menu = document.querySelector(menuButton);
+    this.nav = document.querySelector(navLista);
+    this.eventos = eventos;
+    this.ativarMenu = this.ativarMenu.bind(this);
+  };
 
-  if (menu && nav) {
-    function ativarMenu(event) {
-      event.currentTarget.classList.toggle("inativo");
-      event.currentTarget.classList.toggle("ativo");
-      nav.classList.toggle("abrir");
-      clicarForaMenu(nav, ["click", "touchstart"], () => {
-        nav.classList.remove("abrir");
-        menu.classList.remove("ativo");
-        menu.classList.add("inativo");
-      });
-    }
+  ativarMenu(event) {
+    event.currentTarget.classList.toggle("inativo");
+    event.currentTarget.classList.toggle("ativo");
+    this.nav.classList.toggle("abrir");
+    this.clicarForaMenu(this.nav, this.eventos, () => {
+      this.nav.classList.remove("abrir");
+      this.menu.classList.remove("ativo");
+      this.menu.classList.add("inativo");
+    });
+  };
 
-    function clicarForaMenu(elementoMenu, eventos, callback) {
-      const html = document.documentElement;
-      if (!elementoMenu.hasAttribute("data-click", "")) {
-        eventos.forEach((evento) => {
-          setTimeout(() => {
-            html.addEventListener(evento, controlarClick);
-          });
+  clicarForaMenu(elementoMenu, eventos, callback) {
+    const html = document.documentElement;
+    if (!elementoMenu.hasAttribute("data-click", "")) {
+      eventos.forEach((evento) => {
+        setTimeout(() => {
+          html.addEventListener(evento, controlarClick);
         });
-        elementoMenu.setAttribute("data-click", "");
-      }
+      });
+      elementoMenu.setAttribute("data-click", "");
+    };
 
-      function controlarClick(event) {
-        if (!elementoMenu.contains(event.target) && event.target !== menu) {
-          elementoMenu.removeAttribute("data-click");
-          eventos.forEach((evento) => {
-            html.removeEventListener(evento, controlarClick);
-          });
-          callback();
-        }
-      }
-    }
-
-    menu.addEventListener("click", (event) => ativarMenu(event));
-  }
-}
+    function controlarClick(event) {
+      if (!elementoMenu.contains(event.target) && event.target !== this.menu) {
+        elementoMenu.removeAttribute("data-click");
+        eventos.forEach((evento) => {
+          html.removeEventListener(evento, controlarClick);
+        });
+        callback();
+      };
+    };
+  };
+  init() {
+    if (this.menu && this.nav) {
+      this.menu.addEventListener("click", this.ativarMenu);
+    };
+    return this;
+  };
+};
