@@ -11,7 +11,7 @@ export default class Temas {
       this.html.classList.add("tema-escuro");
     } else if (this.modo === "claro") {
       this.html.classList.remove("tema-escuro");
-    };
+    }
   };
 
   verificarImgModo() {
